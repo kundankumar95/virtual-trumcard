@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "github": "https://github.com/kundankumar95/BeingSarangi",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
-    "github":"https://github.com/kundankumar95/BeingSarangi",
   },
   "dependencies": {
     "firebase": "^11.0.1",

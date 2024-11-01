@@ -100,6 +100,24 @@ const AddProduct = () => {
       alert('An error occurred. Check console for details.');
     }
   };
+  
+  const [publicId, setPublicId] = useState("");
+  // Replace with your own cloud name
+  const [cloudName] = useState("hzxyensd5");
+  // Replace with your own upload preset
+  const [uploadPreset] = useState("aoh4fpwm");
+
+  const [uwConfig] = useState({
+    cloudName,
+    uploadPreset
+  });
+
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
 
   return (
     <form  encType="multipart/form-data" onSubmit={addProduct} className="addproduct">
@@ -196,7 +214,7 @@ const AddProduct = () => {
         </select>
       </div>
       <div className="addproduct-itemfield">
-        <label htmlFor="file-input">
+        {/* <label htmlFor="file-input">
           <img 
             src={image ? URL.createObjectURL(image) : upload_area} 
             className='addproduct-thumbnail' 
@@ -209,7 +227,8 @@ const AddProduct = () => {
           name='image' 
           id='file-input' 
           hidden 
-        />
+        /> */}
+        <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
       </div>
       <button 
         className='addproduct-btn'

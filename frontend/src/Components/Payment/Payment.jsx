@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements } from '@stripe/react-stripe-js';
+import upiImage from '../assets/upi.jpg'
 import './Payment.css';
 
 const stripePromise = loadStripe('pk_test_51Q8QNCLN3ffFuuHqn6d2dJFhlLG70aqXBjFWNxtUVDSn3oZPfQjehWtZbanTif8XKTRvMJ99nIfH6i14TFsw9jgk00f3Uds5qY');
@@ -58,7 +59,15 @@ const Payment = () => {
             setLoading(false);
         }
     };
-
+   const [imageClicked, setImageClicked] = useState({
+    upi : false
+  });
+  const onClickHandler = (order) => {
+    setImageClicked((prevState) => ({
+      ...prevState,
+      [order]: !prevState[order]
+    }));
+  };
     return (
         <div className="payment-container">
             <h2>Payment Details for {cardTitle}</h2>
@@ -86,7 +95,14 @@ const Payment = () => {
                 <button type="submit" className="pay-button" disabled={loading}>
                     {loading ? 'Processing...' : 'Pay Now'}
                 </button>
+                <p className='or'>OR</p>
+                <h2>UPI Payment</h2>
+                <button type="submit" onClick={() => onClickHandler("upi")} className="payThroughUpi" disabled={loading}>
+                    {loading ? 'Processing...' : 'Pay Now'}
+                </button>
+                {imageClicked.upi && <img src={upiImage} className="scanner-img" alt="ground" />}
             </form>
+            
         </div>
     );
 };

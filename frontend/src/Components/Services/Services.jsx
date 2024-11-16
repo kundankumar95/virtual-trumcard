@@ -7,7 +7,7 @@ import Point from '../assets/points.png';
 
 const Services = () => {
   return (
-    <div className="services">
+    <div className="services1">
       <div className="branch-row">
         <h2>Services</h2>
         <div className="subject-row">

@@ -51,7 +51,7 @@ h2 {
     outline: none;
 }
 
-.pay-button {
+.pay-button,pay-through-upi {
     padding: 10px;
     background-color: var(--primary-color);
     color: white;
@@ -61,7 +61,24 @@ h2 {
     transition: background-color 0.3s ease;
     font-size: 1rem;
 }
-
+.payThroughUpi{
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+.scanner-img{
+    height: 200px;
+    width: 200px;
+    margin-top: 20px;
+    align-items: center;
+    margin-left: 25%;
+    border-radius: 10px;
+}
 .pay-button:hover {
     background-color: var(--secondary-color);
 }
@@ -72,4 +89,9 @@ h2 {
         width: 90%;
         margin: 20px auto;
     }
+}
+
+.or{
+    text-align: center;
+    font-size: 20px;
 }

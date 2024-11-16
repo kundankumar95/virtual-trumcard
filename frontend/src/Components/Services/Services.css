@@ -5,7 +5,7 @@
     --background-image: url('../assets/background.jpg'); 
 }
 
-.services {
+.services1 {
     padding: 20px;
     text-align: center;
     background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
@@ -24,9 +24,9 @@
 
 .subject-row {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 15px; 
+    justify-content: center; 
+    gap: 15px;
 }
 
 .card {
@@ -86,10 +86,9 @@
     background-color: var(--secondary-color); 
 }
 
-/* Responsive Design */
 @media (max-width: 1200px) {
     .subject-card {
-        width: 45%; /* Adjust width for medium-large screens */
+        width: 45%; 
     }
     
     .branch-row h2 {
@@ -103,7 +102,7 @@
 
 @media (max-width: 992px) {
     .subject-card {
-        width: 48%; /* Adjust width for tablets and medium screens */
+        width: 45%; 
     }
     
     .branch-row h2 {
@@ -120,8 +119,12 @@
 }
 
 @media (max-width: 768px) {
+    .card{
+        width: 80%;
+    }
     .subject-card {
-        width: 100%; /* Full width for smaller screens */
+        width: 80%; 
+        max-width: 90%; 
     }
     
     .subject-row {
@@ -134,6 +137,12 @@
     
     .subject-card h3 {
         font-size: 14px;
+    }
+
+ 
+    .subject-row {
+        flex-direction: column;
+        align-items: center; 
     }
 }
 
@@ -153,7 +162,7 @@
 
 @media (max-width: 400px) {
     .subject-card h3 {
-        font-size: 12px; /* Smaller font for small mobile screens */
+        font-size: 12px; 
     }
     
     .branch-row h2 {
@@ -164,6 +173,3 @@
         padding: 6px;
     }
 }
-
-
-

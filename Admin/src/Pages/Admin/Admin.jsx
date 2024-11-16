@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import './Admin.css'
 import { Routes, Route } from 'react-router-dom'
@@ -10,7 +11,7 @@ const Admin = () => {
       <Sidebar />
       <div className='admin-content'>
         <Routes>
-          <Route path='/' element={<AddProduct />} />
+          <Route path='/addproduct' element={<AddProduct />} />
           <Route path='/listproduct' element={<ListProduct />} />
         </Routes>
       </div>

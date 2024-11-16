@@ -15,7 +15,7 @@ import { uploadRouter } from './uploading.js';
 import { createRouteHandler } from 'uploadthing/express';
 
 
-//const stripe = new Stripe('sk_test_51Q8QNCLN3ffFuuHqx37c88SNzKc1X1kaSsOSxNqcr8OpDoVn8n2P40WRTczy4dnAyFQ8vh0cuHYmcfyhSsZVuqbV00cNAiEnge');
+// const stripe = new Stripe('sk_test_51Q8QNCLN3ffFuuHqx37c88SNzKc1X1kaSsOSxNqcr8OpDoVn8n2P40WRTczy4dnAyFQ8vh0cuHYmcfyhSsZVuqbV00cNAiEnge');
 
 
 const app = express();
@@ -33,15 +33,10 @@ app.use(
   }),
 );
 const uri = process.env.MONGODB_URI;
-// const uri = "mongodb://localhost:27017/e-commerce";
 mongoose.connect(uri)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("Failed to connect to MongoDB", err.message));
 
-
-
-// kburnwal001
-// 4dYbVH5W89xnN0NN
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -95,21 +90,29 @@ app.post('/signup', async (req, res) => {
 
 
 app.post('/login', async (req, res) => {
-  const user = await Users.findOne({ email: req.body.email });
-  
-  if (user) {
-    const passCompare = await bcrypt.compare(req.body.password, user.password); 
-    if (passCompare) {
-      const data = { user: { id: user.id } };
-      const token = jwt.sign(data, 'secret_ecom', { expiresIn: '1h' }); 
-      res.json({ success: true, token });
-    } else {
-      res.status(400).json({ success: false, error: "Wrong Password" });
+  try {
+    const { email, password } = req.body; // Destructure the body
+
+    const user = await Users.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ success: false, error: "Wrong Email Id" });
     }
-  } else {
-    res.status(400).json({ success: false, error: "Wrong Email Id" });
+
+    const passCompare = await bcrypt.compare(password, user.password);
+    if (!passCompare) {
+      return res.status(400).json({ success: false, error: "Wrong Password" });
+    }
+
+    const data = { user: { id: user.id } };
+    const token = jwt.sign(data, 'secret_ecom', { expiresIn: '1h' });
+
+    res.json({ success: true, token });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ success: false, error: 'Server error' });
   }
 });
+
 
 const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
@@ -257,6 +260,7 @@ router.post('/create-checkout-session', async (req, res) => {
             return res.status(400).json({ error: 'Missing amount or email' });
         }
 
+        const amountInCents = amount * 100; 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{
@@ -265,7 +269,7 @@ router.post('/create-checkout-session', async (req, res) => {
                     product_data: {
                         name: 'Your Product Name',
                     },
-                    unit_amount: amount, 
+                    unit_amount: amountInCents, 
                 },
                 quantity: 1,
             }],
@@ -283,5 +287,5 @@ router.post('/create-checkout-session', async (req, res) => {
 app.use('/api', router);
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on ${port}`);
 });
